@@ -28,5 +28,4 @@ public class PageObjects extends Pages{
             uploadPicture = $("#uploadPicture"),
             modalWindow = $(".modal-content"),
             table = $(".table");
-
 }
