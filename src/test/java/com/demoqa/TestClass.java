@@ -1,29 +1,26 @@
 package com.demoqa;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-//import sun.security.krb5.Config;
-
-import static com.codeborne.selenide.Selenide.*;
+import testData.DataTesting;
 
 public class TestClass extends PageObjects{
+
+    DataTesting dataTesting = new DataTesting();
 
     @Test
     void fillFormTest(){
         //Предусловие
         openUrl("https://demoqa.com/automation-practice-form");
         //Услоаие
-        setValues(firstName,"Иван");
-        setValues(lastName,"Иванов");
-        setValues(userEmail,"Ivanov@test.com");
-        setValues(userNumber,"9010203040");
-        setValues(currentAddress,"Address Is My private Information");
+        setValues(firstName,dataTesting.firstName);
+        setValues(lastName,dataTesting.lastName);
+        setValues(userEmail,dataTesting.email);
+        setValues(userNumber,dataTesting.phoneNumber);
+        setValues(currentAddress,dataTesting.address);
         clickOnElement(dateOfBirth);
-        selectYear.selectOption("1996");
-        selectMonth.selectOption("May");
+        selectYear.selectOption(dataTesting.yearOfBirth);
+        selectMonth.selectOption(dataTesting.month);
         clickOnElement(selectDay);
         clickOnElement(gender);
         clickOnElement(hobbies);
@@ -39,15 +36,15 @@ public class TestClass extends PageObjects{
         clickOnElement(submitButton);
         modalWindow.shouldBe(Condition.visible);
         //Проверка
-        checkText(table,"Student Name","Иван Иванов");
-        checkText(table,"Student Email","Ivanov@test.com");
+        checkText(table,"Student Name",dataTesting.firstName + " " +dataTesting.lastName);
+        checkText(table,"Student Email",dataTesting.email);
         checkText(table,"Gender","Male");
-        checkText(table,"Mobile","9010203040");
-        checkText(table,"Date of Birth","31 May,1996");
+        checkText(table,"Mobile",dataTesting.phoneNumber);
+        checkText(table,"Date of Birth","31 "+ dataTesting.month+","+dataTesting.yearOfBirth);
         checkText(table,"Subjects","Maths");
         checkText(table,"Hobbies","Music");
         checkText(table,"Picture","img.jpg");
-        checkText(table,"Address","Address Is My private Information");
+        checkText(table,"Address",dataTesting.address);
         checkText(table,"State and City","Haryana Karnal");
     }
 }
